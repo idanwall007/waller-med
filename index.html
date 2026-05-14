@@ -1,1796 +1,199 @@
-<!doctype html>
-<html lang="he" dir="rtl">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>אתגר המדיטציה של וולר</title>
-<meta name="description" content="אתגר המדיטציה של וולר — תרגול יומי לבניית הרגל קבוע של שקט פנימי." />
-<meta name="theme-color" content="#0c0a0f" />
 
-<!-- Open Graph / שיתוף בוואטסאפ ופייסבוק -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="אתגר המדיטציה של וולר" />
-<meta property="og:description" content="תרגול יומי לבניית הרגל קבוע של שקט פנימי." />
-<meta property="og:locale" content="he_IL" />
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="אתגר המדיטציה של וולר" />
-<meta name="twitter:description" content="תרגול יומי לבניית הרגל קבוע של שקט פנימי." />
-
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="alternate icon" href="/favicon.ico" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Frank+Ruhl+Libre:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --serif:"Frank Ruhl Libre","Heebo",serif;
-    --sans:"Heebo",system-ui,sans-serif;
-    --mono:"JetBrains Mono",ui-monospace,monospace;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:#0c0a0f;color:#fff;font-family:var(--sans);scroll-behavior:smooth}
-  body{overflow-x:hidden}
-
-  section.fold{
-    min-height:100vh;
-    width:100vw;
-    position:relative;
-    overflow:hidden;
-    display:grid;
-    grid-template-rows:auto 1fr auto;
-    padding:clamp(28px,3.5vw,64px);
-    gap:clamp(20px,2vw,40px);
-  }
-
-  /* type */
-  .num{font-family:var(--mono);font-size:13px;letter-spacing:.18em}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
-  h1.title{
-    font-family:var(--serif);
-    font-weight:900;
-    font-size:clamp(58px,8.5vw,160px);
-    line-height:0.9;
-    letter-spacing:-0.025em;
-  }
-  p.body{
-    font-family:var(--sans);
-    font-weight:500;
-    font-size:clamp(17px,1.25vw,22px);
-    line-height:1.55;
-  }
-  .meta{display:grid;grid-template-columns:max-content 1fr;gap:14px 26px;font-size:16px;line-height:1.45}
-  .meta dt{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding-top:4px}
-  .meta dd{font-weight:500}
-  .meta dd b{font-weight:800}
-  .pill{
-    display:inline-block;padding:8px 16px;border:2px solid currentColor;border-radius:999px;
-    font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
-  }
-  .rule{display:inline-block;width:60px;height:2px;background:currentColor}
-
-  .row{display:flex;align-items:center;gap:18px}
-  .between{display:flex;justify-content:space-between;align-items:center;gap:24px}
-  .stack{display:flex;flex-direction:column}
-
-  .grid{
-    display:grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap:clamp(28px,3vw,60px);
-    align-items:center;
-  }
-  .grid.flip{grid-template-columns: 1fr 1.05fr}
-  .grid.flip .text{order:2}
-  .grid.flip .figure{order:1}
-  .text{display:flex;flex-direction:column;gap:28px;max-width:600px}
-  .figure{
-    width:100%;
-    aspect-ratio:1/1;
-    max-height:min(72vh, 700px);
-    justify-self:center;
-    position:relative;
-  }
-
-  /* ===== brainwave overlay ===== */
-  .wave-band{
-    position:absolute;
-    top:50%;left:50%;
-    width:88%;height:88%;
-    transform:translate(-50%,-50%);
-    border-radius:50%;
-    overflow:hidden;
-    pointer-events:none;z-index:5;
-  }
-  .wave-strip{
-    position:absolute;
-    top:50%;left:0;right:0;
-    height:clamp(140px,20vw,220px);
-    transform:translateY(-50%);
-  }
-  .wave-track{
-    position:relative;
-    width:100%;height:100%;
-    animation:waveScroll linear infinite;
-    will-change:transform;
-  }
-  .wave-track > svg{
-    position:absolute;top:0;
-    width:100%;height:100%;display:block;
-  }
-  .wave-track > svg:nth-child(1){left:0}
-  .wave-track > svg:nth-child(2){left:100%}
-  .wave-track path{
-    fill:none;stroke:currentColor;stroke-width:3.5;
-    stroke-linejoin:round;stroke-linecap:round;
-    opacity:0.55;
-  }
-  @keyframes waveScroll{
-    from{transform:translateX(0)}
-    to{transform:translateX(-100%)}
-  }
-  .wave-label{
-    position:absolute;
-    bottom:11%;left:50%;
-    transform:translateX(-50%);
-    display:inline-flex;align-items:center;gap:6px;
-    font-family:var(--mono);
-    font-size:clamp(10px,0.85vw,13px);
-    letter-spacing:.18em;font-weight:800;
-    padding:5px 12px;border:2px solid currentColor;
-    border-radius:999px;
-    background:rgba(10,10,15,.55);
-    color:currentColor;white-space:nowrap;
-    text-transform:uppercase;
-    opacity:0.92;
-  }
-  @media (prefers-reduced-motion: reduce){
-    .wave-track{animation:none}
-  }
-  /* per-fold wave color (high contrast against each background) */
-  .f1 .wave-band{color:#ffe14a}
-  .f2 .wave-band{color:#ffe14a}
-  .f3 .wave-band{color:#f7d97c}
-  .f4 .wave-band{color:#0a1733}
-  .f5 .wave-band{color:#ffa64a}
-  .f6 .wave-band{color:#0e2a1b}
-  .f7 .wave-band{color:#ff2424}
-  .f8 .wave-band{color:#ffd0b8}
-  .f9 .wave-band{color:#c79d5a}
-  .f10 .wave-band{color:#0a0a0a}
-  .f4 .wave-label{background:rgba(228,238,243,.7);color:#0a1733}
-  .figure svg{width:100%;height:100%;display:block}
-
-  /* ====== palettes (very high contrast) ====== */
-  /* Intro — warm gold */
-  .intro{background:#f4c84a;color:#171012}
-  .intro .accent{color:#e6112d}
-  /* 1 Takeoff — hot pink with electric */
-  .f1{background:#ff2e87;color:#fff}
-  .f1 .accent{color:#ffe14a}
-  /* 2 Business challenge — vermillion */
-  .f2{background:#e6112d;color:#fff7d6}
-  .f2 .accent{color:#ffe14a}
-  /* 3 TM — deep aubergine */
-  .f3{background:#3b0f3a;color:#f7d97c}
-  .f3 .accent{color:#ff9966}
-  /* 4 Void — pale w/ deep navy */
-  .f4{background:#e4eef3;color:#0a1733}
-  .f4 .accent{color:#1052cf}
-  /* 5 Business scan — forest */
-  .f5{background:#0e3b2b;color:#f3e7c4}
-  .f5 .accent{color:#ffa64a}
-  /* 6 Walking — saffron */
-  .f6{background:#f5b820;color:#0e2a1b}
-  .f6 .accent{color:#d63a23}
-  /* 7 Trataka — black */
-  .f7{background:#0a0a0a;color:#f1ece2}
-  .f7 .accent{color:#ff2424}
-  /* 8 Nidra — deep indigo */
-  .f8{background:#1a1656;color:#ffd0b8}
-  .f8 .accent{color:#ff7a8a}
-  /* 9 Death — slate violet */
-  .f9{background:#3d3a52;color:#f0e9d0}
-  .f9 .accent{color:#c79d5a}
-  .f9 .pill{border-color:#f0e9d0;color:#f0e9d0}
-  /* 10 Super fire — electric lime */
-  .f10{background:#c7f000;color:#0a0a0a}
-  .f10 .accent{color:#e6112d}
-  .f10 .pill{border-color:#0a0a0a;color:#0a0a0a}
-  /* outro */
-  .outro{background:#0c0a0f;color:#f4e9d2}
-
-  /* header bar */
-  .topbar{display:flex;justify-content:space-between;align-items:center;gap:24px}
-  .footbar{display:flex;justify-content:space-between;align-items:end;gap:24px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
-
-  /* nav dots */
-  .nav{position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:11px;mix-blend-mode:difference}
-  .nav a{width:11px;height:11px;border-radius:50%;border:2px solid #fff;opacity:.6;transition:opacity .2s,transform .2s}
-  .nav a:hover{opacity:1;transform:scale(1.3)}
-  .nav a.active{background:#fff;opacity:1}
-
-  .progress{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:60;mix-blend-mode:difference}
-  .progress > div{height:100%;background:#fff;width:0%;transition:width .15s}
-
-  .corner{position:fixed;bottom:16px;right:22px;z-index:50;font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;mix-blend-mode:difference;color:#fff;font-weight:700}
-
-  /* intro hero */
-  .hero{display:flex;flex-direction:column;gap:30px;max-width:680px}
-  .hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(58px,8.5vw,160px);line-height:0.86;letter-spacing:-0.03em}
-  .hero .sub{font-size:clamp(17px,1.35vw,24px);line-height:1.45;color:#3a2a1c;font-weight:500}
-
-  /* outro */
-  .outro h2{font-family:var(--serif);font-weight:900;font-size:clamp(52px,7vw,110px);line-height:0.95;letter-spacing:-0.02em}
-  .outro .center{max-width:920px;display:flex;flex-direction:column;gap:28px}
-  .grid8{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(244,233,210,.18);border:2px solid rgba(244,233,210,.18);margin-top:22px}
-  .grid8 .cell{padding:20px;background:#0c0a0f;display:flex;flex-direction:column;gap:6px;min-height:120px}
-  .grid8 .n{font-family:var(--mono);font-size:11px;letter-spacing:.2em;opacity:.65;font-weight:700}
-  .grid8 .t{font-family:var(--serif);font-weight:700;font-size:22px;line-height:1.1}
-  .grid8 .d{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.55;margin-top:auto;font-weight:600}
-
-  /* reveal */
-  .fold{opacity:0;transform:translateY(12px);transition:opacity .7s ease,transform .7s ease}
-  .fold.seen{opacity:1;transform:none}
-  .intro,.outro{opacity:1;transform:none}
-
-  /* ====== meditation dock ====== */
-  .dock{
-    position:fixed;bottom:20px;left:50%;
-    transform:translateX(-50%);
-    z-index:80;display:flex;align-items:center;gap:14px;
-    direction:ltr;font-family:var(--mono);
-    animation: dockDrift var(--dock-speed, 30s) ease-in-out infinite;
-    will-change: transform;
-  }
-  @keyframes dockDrift{
-    0%,100% { transform: translate(calc(-50% - 3cm), 0); }
-    50%     { transform: translate(calc(-50% + 3cm), 0); }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .dock{ animation:none; transform:translateX(-50%); }
-  }
-  .dock button{font-family:var(--mono);border:none;cursor:pointer;transition:transform .15s ease, background .2s ease, opacity .2s}
-  .dock button:hover{transform:translateY(-1px)}
-  /* per-fold dock palette (high contrast against each fold bg) */
-  body{
-    --dock-bg:#0c0a0f;--dock-fg:#f4e9d2;--dock-halo:#e6112d;
-  }
-  body.dock-s0{--dock-bg:#0c0a0f;--dock-fg:#f4e9d2;--dock-halo:#e6112d;--dock-speed:30s}
-  body.dock-s1{--dock-bg:#1052cf;--dock-fg:#ffffff;--dock-halo:#ffe14a;--dock-speed:24s}
-  body.dock-s2{--dock-bg:#fff7d6;--dock-fg:#1a0a0a;--dock-halo:#ffe14a;--dock-speed:22s}
-  body.dock-s3{--dock-bg:#f7d97c;--dock-fg:#3b0f3a;--dock-halo:#ff9966;--dock-speed:45s}
-  body.dock-s4{--dock-bg:#0a1733;--dock-fg:#ffffff;--dock-halo:#1052cf;--dock-speed:50s}
-  body.dock-s5{--dock-bg:#f3e7c4;--dock-fg:#0e3b2b;--dock-halo:#ffa64a;--dock-speed:38s}
-  body.dock-s6{--dock-bg:#0e2a1b;--dock-fg:#f5b820;--dock-halo:#d63a23;--dock-speed:28s}
-  body.dock-s7{--dock-bg:#f1ece2;--dock-fg:#0a0a0a;--dock-halo:#ff2424;--dock-speed:50s}
-  body.dock-s8{--dock-bg:#ffd0b8;--dock-fg:#1a1656;--dock-halo:#ff7a8a;--dock-speed:70s}
-  body.dock-s9{--dock-bg:#f0e9d0;--dock-fg:#3d3a52;--dock-halo:#c79d5a;--dock-speed:55s}
-  body.dock-s10{--dock-bg:#0a0a0a;--dock-fg:#c7f000;--dock-halo:#e6112d;--dock-speed:22s}
-
-  .audio-btn{
-    width:46px;height:46px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    background:var(--dock-bg);color:var(--dock-fg);border:2px solid var(--dock-fg);
-    box-shadow:0 6px 24px rgba(0,0,0,.35);
-    position:relative;
-    transition:background .55s ease,color .55s ease,border-color .55s ease;
-  }
-  .audio-btn.muted{opacity:.55}
-  .audio-btn svg{width:18px;height:18px}
-
-  .timer-pill{
-    position:relative;
-    display:flex;align-items:center;gap:14px;
-    padding:12px 20px 12px 16px;border-radius:999px;
-    background:var(--dock-bg);color:var(--dock-fg);border:2px solid var(--dock-halo);
-    transition:background .55s ease,color .55s ease,border-color .55s ease,box-shadow .55s ease;
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--dock-halo) 35%, transparent),
-      0 0 22px 4px color-mix(in srgb, var(--dock-halo) 30%, transparent),
-      0 0 60px 12px color-mix(in srgb, var(--dock-halo) 18%, transparent),
-      0 8px 28px rgba(0,0,0,.35);
-  }
-  .timer-pill::before{
-    content:"";
-    position:absolute;
-    inset:-22px;
-    border-radius:999px;
-    background: radial-gradient(closest-side,
-      color-mix(in srgb, var(--dock-halo) 55%, transparent) 0%,
-      color-mix(in srgb, var(--dock-halo) 25%, transparent) 45%,
-      transparent 75%);
-    z-index:-1;
-    pointer-events:none;
-    animation: pillHalo 5s ease-in-out infinite;
-    transition: background .55s ease;
-  }
-  .timer-pill .ico svg{width:14px;height:14px;fill:var(--dock-fg);transition:fill .55s ease}
-  @keyframes pillHalo{
-    0%,100% { opacity:.75; transform:scale(1); }
-    50%     { opacity:1;   transform:scale(1.08); }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .timer-pill::before{ animation:none; }
-  }
-  .timer-pill .time{font-size:16px;font-weight:700;letter-spacing:.08em;font-variant-numeric:tabular-nums}
-  .timer-pill .label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;opacity:.7;margin-right:2px}
-  .timer-pill .ico{width:14px;height:14px;display:flex;align-items:center;justify-content:center}
-  .timer-pill.complete{animation:timerDing 1.4s ease-out 3}
-  @keyframes timerDing{
-    0%,100%{box-shadow:0 0 0 0 rgba(244,233,210,.7), 0 6px 24px rgba(0,0,0,.35)}
-    50%{box-shadow:0 0 0 24px rgba(244,233,210,0), 0 6px 24px rgba(0,0,0,.35)}
-  }
-
-  .timer-panel{
-    position:fixed;bottom:84px;left:50%;
-    transform:translateX(-50%) translateY(14px);
-    z-index:79;
-    background:#f4e9d2;color:#0c0a0f;
-    border-radius:22px;padding:26px 28px 24px;
-    box-shadow:0 30px 80px rgba(0,0,0,.5);
-    display:flex;flex-direction:column;gap:18px;align-items:center;
-    width:min(92vw,420px);
-    opacity:0;pointer-events:none;
-    transition:opacity .25s ease, transform .25s ease;
-  }
-  .timer-panel.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
-  .timer-panel .title{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#5a4e44;font-weight:700}
-  .timer-panel .ring{width:170px;height:170px;position:relative;display:flex;align-items:center;justify-content:center}
-  .timer-panel .ring svg{position:absolute;inset:0;transform:rotate(-90deg);pointer-events:none}
-  .timer-panel .ring .big{
-    position:relative;z-index:2;
-    font-family:var(--serif);font-weight:700;font-size:54px;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
-    padding:4px 14px;border-radius:10px;cursor:text;outline:none;
-    user-select:text;-webkit-user-select:text;
-    transition:background .15s ease;
-  }
-  .timer-panel .ring .big:hover{background:rgba(12,10,15,.05)}
-  .timer-panel .ring .big:focus{background:transparent;box-shadow:none;caret-color:#0c0a0f}
-  .timer-panel .ring .big::selection{background:rgba(230,17,45,.18);color:#0c0a0f}
-  .timer-panel .ring .big::-moz-selection{background:rgba(230,17,45,.18);color:#0c0a0f}
-  .timer-panel .presets{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-  .timer-panel .presets button{
-    border:2px solid #0c0a0f;background:transparent;color:#0c0a0f;
-    padding:8px 14px;border-radius:999px;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.08em;
-  }
-  .timer-panel .presets button.active{background:#0c0a0f;color:#f4e9d2}
-  .timer-panel .controls{display:flex;gap:10px;width:100%}
-  .timer-panel .controls button{
-    flex:1;padding:14px 12px;border-radius:14px;font-family:var(--mono);font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;border:none;
-  }
-  .timer-panel .controls .start{background:#e6112d;color:#fff}
-  .timer-panel .controls .reset{background:transparent;color:#0c0a0f;border:2px solid #0c0a0f}
-
-  @media (max-width:900px){
-    .corner{display:none}
-    .timer-panel{width:90vw}
-  }
-
-  @media (max-width:900px){
-    .grid,.grid.flip{grid-template-columns:1fr}
-    .grid.flip .text{order:1}
-    .grid.flip .figure{order:2}
-    .figure{max-height:60vh}
-    .nav{display:none}
-    h1.title{font-size:clamp(48px,12vw,90px)}
-    .hero h1{font-size:clamp(54px,14vw,90px)}
-  }
-</style>
-</head>
-<body>
-
-<div class="progress"><div id="bar"></div></div>
-<nav class="nav" id="nav"></nav>
-<div class="corner">Waller · Meditation Challenge</div>
-
-<!-- ============ INTRO ============ -->
-<section class="fold intro" id="s0" data-label="intro">
-  <div class="topbar">
-    <div class="eyebrow">וולר · אתגר המדיטציה</div>
-    <div class="eyebrow">I / X</div>
-  </div>
-
-  <div class="grid">
-    <div class="text hero">
-      <div class="row" style="color:#5a3a20">
-        <span class="eyebrow">פרק 00</span><span class="rule" style="background:#5a3a20"></span><span class="eyebrow">הקדמה</span>
-      </div>
-      <h1>עשר דרכים<br/>להיכנס <span class="accent">פנימה.</span></h1>
-      <p class="sub">ספרייה של תרגולים — מנשימת אש שמייצרת פריצות דרך, דרך מנטרה שקטה שמכבה את הראש, ועד שכיבה חסרת תנועה ששקולה לשעות שינה. כל פרק — טכניקה אחת, צבע אחד, ותחושה אחת.</p>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="cIntro"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#e6112d"/>
-        <g clip-path="url(#cIntro)">
-          <rect x="40" y="40" width="720" height="720" fill="#e6112d"/>
-          <!-- back head (curly hair) -->
-          <ellipse cx="280" cy="380" rx="200" ry="240" fill="#2b0a0a"/>
-          <!-- back face -->
-          <ellipse cx="320" cy="400" rx="140" ry="180" fill="#c46a3a"/>
-          <!-- front face -->
-          <ellipse cx="500" cy="400" rx="180" ry="220" fill="#f7d97c"/>
-          <!-- front hair -->
-          <path d="M 380 240 Q 500 160 660 240 L 660 350 Q 600 280 500 280 Q 400 280 380 350 Z" fill="#3a1a0a"/>
-          <!-- features on front face -->
-          <g stroke="#171012" stroke-width="3" fill="none" stroke-linecap="round">
-            <path d="M 440 400 Q 460 410 480 400"/>
-            <path d="M 540 400 Q 560 410 580 400"/>
-            <path d="M 510 430 L 510 470"/>
-            <path d="M 480 510 Q 510 525 540 510"/>
-          </g>
-          <!-- vertical color stripes -->
-          <g opacity="0.92">
-            <rect x="140" y="40" width="40" height="720" fill="#f4c84a"/>
-            <rect x="260" y="40" width="60" height="720" fill="#0e3b2b"/>
-            <rect x="390" y="40" width="48" height="720" fill="#f7d97c"/>
-            <rect x="510" y="40" width="34" height="720" fill="#1052cf"/>
-            <rect x="620" y="40" width="60" height="720" fill="#ff2e87"/>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#171012" stroke-width="4"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#171012" stroke-width="1.5" stroke-dasharray="2 12"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar" style="color:#5a3a20">
-    <span>גלילה ↓</span>
-    <span>אקטיבי · תובנות · הרפיה</span>
-    <span>00 — INTRO</span>
-  </div>
-</section>
-
-<!-- ============ 1. הטיסה ממריאה ============ -->
-<section class="fold f1" id="s1" data-label="01-takeoff">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 01 / X</span><span class="rule"></span><span class="eyebrow">אקטיבי · מיקוד מוחי</span></div>
-    <span class="pill">2–5 דק׳</span>
-  </div>
-
-  <div class="grid">
-    <div class="text">
-      <h1 class="title">״הטיסה<br/><span class="accent">ממריאה.״</span></h1>
-      <p class="body">נשימה מכוונת אל המוח — שאיפה קצרה פנימה, נשיפה ארוכה ואיטית החוצה. תשומת הלב נעה בין החלקים: ימין מול שמאל, לוגי מול יצירתי. מדמיינים את הנוירונים נדלקים ויורים לכל עבר.</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>נשימה אסימטרית · מיקוד מוחי</dd>
-        <dt>אימפקט</dt><dd>חיבור ליכולות המוחיות, המרצה ויזואלית של המחשבה.</dd>
-        <dt>סוג</dt><dd><b>אקטיבי</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="c1"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#ffe14a"/>
-        <g clip-path="url(#c1)">
-          <!-- background split -->
-          <rect x="40"  y="40" width="360" height="720" fill="#1052cf"/>
-          <rect x="400" y="40" width="360" height="720" fill="#ffe14a"/>
-          <!-- head -->
-          <ellipse cx="400" cy="400" rx="220" ry="260" fill="#f9b58a"/>
-          <!-- hair top -->
-          <path d="M 200 280 Q 400 120 600 280 L 600 360 Q 500 310 400 310 Q 300 310 200 360 Z" fill="#1c0a32"/>
-          <!-- neck/shoulders -->
-          <path d="M 320 600 L 320 720 L 480 720 L 480 600 Q 440 640 400 640 Q 360 640 320 600 Z" fill="#f9b58a"/>
-          <rect x="120" y="700" width="560" height="100" fill="#1c0a32"/>
-          <!-- center divider line -->
-          <line x1="400" y1="160" x2="400" y2="760" stroke="#1c0a32" stroke-width="3"/>
-          <!-- features -->
-          <g stroke="#1c0a32" stroke-width="4" fill="none" stroke-linecap="round">
-            <!-- eyebrows -->
-            <path d="M 310 360 Q 340 348 370 360"/>
-            <path d="M 430 360 Q 460 348 490 360"/>
-            <!-- eyes (closed) -->
-            <path d="M 310 400 Q 340 410 370 400"/>
-            <path d="M 430 400 Q 460 410 490 400"/>
-            <!-- nose -->
-            <path d="M 400 410 L 400 490 Q 400 510 380 510"/>
-            <!-- mouth -->
-            <path d="M 360 560 Q 400 580 440 560"/>
-          </g>
-          <!-- neurons/sparks around head -->
-          <g fill="#ff2e87">
-            <circle cx="140" cy="180" r="10"/>
-            <circle cx="660" cy="200" r="12"/>
-            <circle cx="100" cy="500" r="8"/>
-            <circle cx="700" cy="540" r="10"/>
-            <circle cx="200" cy="80" r="6"/>
-            <circle cx="600" cy="80" r="8"/>
-          </g>
-          <g stroke="#ff2e87" stroke-width="2" fill="none">
-            <line x1="140" y1="180" x2="240" y2="280"/>
-            <line x1="660" y1="200" x2="560" y2="280"/>
-            <line x1="100" y1="500" x2="200" y2="460"/>
-            <line x1="700" y1="540" x2="600" y2="460"/>
-          </g>
-          <!-- vertical stripes overlay -->
-          <g opacity="0.85">
-            <rect x="170" y="40" width="34" height="720" fill="#ff2e87"/>
-            <rect x="540" y="40" width="40" height="720" fill="#1052cf"/>
-            <rect x="650" y="40" width="22" height="720" fill="#ff2e87"/>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#1c0a32" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#1c0a32" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>שאיפה קצרה ← נשיפה ארוכה</span>
-    <span>ימין · שמאל · ימין · שמאל</span>
-    <span>01 — TAKEOFF</span>
-  </div>
-</section>
-
-<!-- ============ 2. ביזנס צ'לנג' ============ -->
-<section class="fold f2" id="s2" data-label="02-business-challenge">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 02 / X</span><span class="rule"></span><span class="eyebrow">אקטיבי · פתרון בעיות</span></div>
-    <span class="pill">60 שניות · עצירה</span>
-  </div>
-
-  <div class="grid flip">
-    <div class="text">
-      <h1 class="title">״ביזנס<br/><span class="accent">צ׳לנג׳.״</span></h1>
-      <p class="body">מגדירים אתגר עסקי מתסכל אחד. שישים שניות של נשימת אש מהירה וחזקה דרך האף. עצירה. ובתוך השקט הצפוף הזה — מחפשים פתרון.</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>נשימת אש · עצירת נשימה</dd>
-        <dt>אימפקט</dt><dd>מעבר לגלי גמא <b>(30–100hz)</b> — תובנות מהירות ופריצות דרך.</dd>
-        <dt>סוג</dt><dd><b>אקטיבי</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="c2"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#ffe14a"/>
-        <g clip-path="url(#c2)">
-          <rect x="40" y="40" width="720" height="720" fill="#ffe14a"/>
-          <!-- profile face looking left, exhaling -->
-          <!-- hair (back) -->
-          <path d="M 540 200 Q 620 240 620 360 Q 620 500 580 600 L 480 620 L 480 220 Z" fill="#1c0606"/>
-          <!-- face profile (right-facing means face on right side) actually let's do face on LEFT side of head, exhaling to the LEFT -->
-          <!-- Re-do: face looking left -->
-          <path d="M 360 220
-                   Q 240 240 220 360
-                   Q 220 440 270 470
-                   L 230 510
-                   Q 220 530 250 540
-                   L 280 555
-                   Q 270 580 290 590
-                   Q 320 610 360 620
-                   L 540 620
-                   L 540 220 Z" fill="#f0a060"/>
-          <!-- hair top -->
-          <path d="M 260 240 Q 380 140 540 200 L 540 280 Q 440 230 320 270 Z" fill="#1c0606"/>
-          <!-- eye (open, intense) -->
-          <ellipse cx="340" cy="370" rx="14" ry="10" fill="#1c0606"/>
-          <!-- eyebrow furrowed -->
-          <path d="M 310 340 L 380 348" stroke="#1c0606" stroke-width="5" fill="none" stroke-linecap="round"/>
-          <!-- nose -->
-          <path d="M 280 400 L 240 460 Q 235 480 260 480" stroke="#1c0606" stroke-width="4" fill="none"/>
-          <!-- mouth open (exhaling) -->
-          <ellipse cx="285" cy="540" rx="22" ry="12" fill="#1c0606"/>
-          <!-- breath / fire wedges shooting LEFT -->
-          <g fill="#e6112d">
-            <path d="M 260 540 L 100 470 L 100 510 Z"/>
-            <path d="M 250 545 L 60 540 L 100 575 Z"/>
-            <path d="M 260 552 L 120 620 L 160 590 Z"/>
-          </g>
-          <g fill="#ffe14a">
-            <path d="M 250 545 L 30 530 L 80 555 Z"/>
-            <path d="M 260 548 L 90 600 L 130 580 Z"/>
-          </g>
-          <!-- vertical stripes overlay -->
-          <g opacity="0.88">
-            <rect x="200" y="40" width="28" height="720" fill="#e6112d"/>
-            <rect x="320" y="40" width="44" height="720" fill="#fff7d6"/>
-            <rect x="460" y="40" width="32" height="720" fill="#1c0606"/>
-            <rect x="600" y="40" width="60" height="720" fill="#e6112d"/>
-          </g>
-          <!-- pulsing circles bottom-right -->
-          <g fill="none" stroke="#1c0606" stroke-width="2">
-            <circle cx="640" cy="660" r="20"/>
-            <circle cx="640" cy="660" r="40"/>
-            <circle cx="640" cy="660" r="60"/>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#1c0606" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#1c0606" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>נשם · נשם · עצור · ראה</span>
-    <span>02 — BUSINESS CHALLENGE</span>
-  </div>
-</section>
-
-<!-- ============ 3. TM ============ -->
-<section class="fold f3" id="s3" data-label="03-tm">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 03 / X</span><span class="rule"></span><span class="eyebrow">תובנות · צלילה לשקט</span></div>
-    <span class="pill">20 דק׳</span>
-  </div>
-
-  <div class="grid">
-    <div class="text">
-      <h1 class="title">מדיטציה<br/><span class="accent">טרנסדנטלית.</span></h1>
-      <p class="body">בוחרים מילה חסרת משמעות וחוזרים עליה בלב — שוב ושוב, ללא מאמץ. כשהמחשבה נודדת מחזירים אותה בעדינות אל המנטרה. המפתח הוא חוסר מאמץ מוחלט.</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>מנטרה אישית · ישיבה בעיניים עצומות</dd>
-        <dt>אימפקט</dt><dd>עוגן של שקט וחוסן. <b>התובנות מגיעות מיד אחרי.</b></dd>
-        <dt>סוג</dt><dd><b>תובנות</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="c3"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#ff9966"/>
-        <g clip-path="url(#c3)">
-          <rect x="40" y="40" width="720" height="720" fill="#ff9966"/>
-          <!-- right-facing profile, eyes closed, head + neck + lotus hands -->
-          <!-- hair back (left side big) -->
-          <path d="M 280 200 Q 200 260 200 400 Q 200 520 260 600 L 380 600 L 380 220 Z" fill="#2b0518"/>
-          <!-- face profile -->
-          <path d="M 380 220
-                   Q 540 240 580 360
-                   Q 590 410 540 430
-                   L 580 470
-                   Q 590 490 560 500
-                   L 540 510
-                   Q 550 535 530 550
-                   Q 510 575 480 580
-                   L 380 580 Z" fill="#f7d97c"/>
-          <!-- hair top -->
-          <path d="M 280 220 Q 400 140 560 240 L 560 290 Q 460 240 360 260 Z" fill="#2b0518"/>
-          <!-- closed eye -->
-          <path d="M 470 380 Q 490 395 510 380" stroke="#2b0518" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <!-- subtle eyebrow -->
-          <path d="M 460 350 Q 490 340 520 350" stroke="#2b0518" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <!-- soft lips -->
-          <path d="M 510 510 Q 530 522 550 510" stroke="#2b0518" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <!-- neck/torso -->
-          <path d="M 380 580 L 380 720 L 520 720 L 520 580 Z" fill="#f7d97c"/>
-          <!-- robe/torso color -->
-          <rect x="200" y="680" width="500" height="120" fill="#3b0f3a"/>
-          <!-- gold ring around head (halo) -->
-          <circle cx="430" cy="380" r="240" fill="none" stroke="#f7d97c" stroke-width="2" opacity="0.85"/>
-          <!-- mantra repetition: small dots radiating -->
-          <g fill="#f7d97c">
-            <circle cx="700" cy="250" r="6"/>
-            <circle cx="720" cy="380" r="8"/>
-            <circle cx="700" cy="500" r="6"/>
-            <circle cx="120" cy="250" r="6"/>
-            <circle cx="100" cy="380" r="8"/>
-            <circle cx="120" cy="500" r="6"/>
-            <circle cx="400" cy="80" r="6"/>
-          </g>
-          <!-- repeating mantra arcs -->
-          <g fill="none" stroke="#f7d97c" stroke-width="1.5" opacity="0.6">
-            <circle cx="430" cy="380" r="280"/>
-            <circle cx="430" cy="380" r="320"/>
-          </g>
-          <!-- vertical stripes overlay -->
-          <g opacity="0.85">
-            <rect x="120" y="40" width="30" height="720" fill="#3b0f3a"/>
-            <rect x="220" y="40" width="22" height="720" fill="#f7d97c"/>
-            <rect x="620" y="40" width="46" height="720" fill="#3b0f3a"/>
-            <rect x="700" y="40" width="20" height="720" fill="#f7d97c"/>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#f7d97c" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#f7d97c" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>שב · עצום · חזור · רפה</span>
-    <span>03 — TM</span>
-  </div>
-</section>
-
-<!-- ============ 4. VOID ============ -->
-<section class="fold f4" id="s4" data-label="04-void">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 04 / X</span><span class="rule"></span><span class="eyebrow">תובנות · איפוס מערכת העצבים</span></div>
-    <span class="pill">5–5 · קצב נשימה</span>
-  </div>
-
-  <div class="grid flip">
-    <div class="text">
-      <h1 class="title">״<span class="accent">Void</span>.״</h1>
-      <p class="body">מדמיינים קו של אור מהקודקוד עד הישבן. נושמים בקצב 5–5. בשאיפה האור נדלק מלמעלה למטה. בנשיפה — מלמטה למעלה. המוח רץ. הקו הזה מכבה אותו.</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>קו אור מרכזי · נשימה קצובה</dd>
-        <dt>אימפקט</dt><dd>חיסול רומינציה. מעבר מיידי ל<b>גלי אלפא</b>.</dd>
-        <dt>סוג</dt><dd><b>תובנות</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs>
-          <clipPath id="c4"><circle cx="400" cy="400" r="360"/></clipPath>
-          <linearGradient id="beam4" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#ffe14a" stop-opacity="0"/>
-            <stop offset="50%" stop-color="#ffe14a" stop-opacity="1"/>
-            <stop offset="100%" stop-color="#ffe14a" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <circle cx="400" cy="400" r="360" fill="#1052cf"/>
-        <g clip-path="url(#c4)">
-          <rect x="40" y="40" width="720" height="720" fill="#1052cf"/>
-          <!-- seated figure -->
-          <!-- legs / lotus base -->
-          <ellipse cx="400" cy="700" rx="260" ry="60" fill="#0a1733"/>
-          <!-- body -->
-          <path d="M 280 540 Q 400 460 520 540 L 520 700 L 280 700 Z" fill="#0a1733"/>
-          <!-- head -->
-          <ellipse cx="400" cy="380" rx="170" ry="200" fill="#f0d1a8"/>
-          <!-- hair -->
-          <path d="M 240 320 Q 400 200 560 320 L 560 380 Q 480 320 400 320 Q 320 320 240 380 Z" fill="#0a1733"/>
-          <!-- features (calm) -->
-          <g stroke="#0a1733" stroke-width="4" fill="none" stroke-linecap="round">
-            <path d="M 330 380 Q 350 392 370 380"/>
-            <path d="M 430 380 Q 450 392 470 380"/>
-            <path d="M 400 400 L 400 450 Q 400 465 385 465"/>
-            <path d="M 370 510 Q 400 520 430 510"/>
-          </g>
-          <!-- light beam down center -->
-          <rect x="392" y="40" width="16" height="760" fill="url(#beam4)"/>
-          <rect x="396" y="40" width="8"  height="760" fill="#fff7d6"/>
-          <!-- light nodes on beam -->
-          <g fill="#ffe14a" stroke="#0a1733" stroke-width="2">
-            <circle cx="400" cy="180" r="14"/>
-            <circle cx="400" cy="320" r="14"/>
-            <circle cx="400" cy="460" r="14"/>
-            <circle cx="400" cy="600" r="14"/>
-            <circle cx="400" cy="720" r="14"/>
-          </g>
-          <!-- breath rings to right -->
-          <g fill="none" stroke="#ffe14a" stroke-width="2" opacity="0.85">
-            <circle cx="640" cy="400" r="40"/>
-            <circle cx="640" cy="400" r="70"/>
-            <circle cx="640" cy="400" r="100"/>
-          </g>
-          <!-- vertical stripes -->
-          <g opacity="0.78">
-            <rect x="120" y="40" width="34" height="720" fill="#0a1733"/>
-            <rect x="220" y="40" width="22" height="720" fill="#ffe14a"/>
-            <rect x="640" y="40" width="40" height="720" fill="#0a1733"/>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#0a1733" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#0a1733" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>קודקוד · לב · בטן · ישבן</span>
-    <span>04 — VOID</span>
-  </div>
-</section>
-
-<!-- ============ 5. ביזנס סקאן ============ -->
-<section class="fold f5" id="s5" data-label="05-business-scan">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 05 / X</span><span class="rule"></span><span class="eyebrow">תובנות · מהתת־מודע</span></div>
-    <span class="pill">מדיטציה + מחברת</span>
-  </div>
-
-  <div class="grid">
-    <div class="text">
-      <h1 class="title">״ביזנס<br/><span class="accent">סקאן.״</span></h1>
-      <p class="body">נכנסים פנימה. סורקים אברים ושואלים שאלות — מוח, עיניים, אוזניים, לב, בטן. פותחים עיניים, רושמים את התשובות שצפו, וחוזרים פנימה. שוב.</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>סריקת גוף · שאלות נקודתיות · כתיבה</dd>
-        <dt>אימפקט</dt><dd>הצפת תובנות תקועות → תוכנית פעולה מיידית.</dd>
-        <dt>סוג</dt><dd><b>תובנות</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="c5"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#ffa64a"/>
-        <g clip-path="url(#c5)">
-          <rect x="40" y="40" width="720" height="720" fill="#ffa64a"/>
-          <!-- torso + head -->
-          <!-- shoulders / body -->
-          <path d="M 200 580 Q 250 460 320 440 L 480 440 Q 550 460 600 580 L 600 760 L 200 760 Z" fill="#0e3b2b"/>
-          <!-- head -->
-          <ellipse cx="400" cy="320" rx="160" ry="190" fill="#f3e7c4"/>
-          <!-- hair -->
-          <path d="M 250 280 Q 400 140 550 280 L 550 360 Q 460 290 400 290 Q 340 290 250 360 Z" fill="#1a0a06"/>
-          <!-- features -->
-          <g stroke="#1a0a06" stroke-width="4" fill="none" stroke-linecap="round">
-            <ellipse cx="350" cy="330" rx="10" ry="8" fill="#1a0a06"/>
-            <ellipse cx="450" cy="330" rx="10" ry="8" fill="#1a0a06"/>
-            <path d="M 400 340 L 400 400 Q 400 415 385 415"/>
-            <path d="M 370 450 Q 400 460 430 450"/>
-          </g>
-          <!-- horizontal scan bands across body -->
-          <g opacity="0.92">
-            <rect x="40" y="280" width="720" height="20" fill="#f3e7c4"/>
-            <rect x="40" y="350" width="720" height="14" fill="#ffa64a"/>
-            <rect x="40" y="450" width="720" height="18" fill="#e6112d"/>
-            <rect x="40" y="520" width="720" height="14" fill="#f3e7c4"/>
-            <rect x="40" y="600" width="720" height="20" fill="#ffa64a"/>
-            <rect x="40" y="670" width="720" height="14" fill="#f3e7c4"/>
-          </g>
-          <!-- annotation: small note cards floating -->
-          <g fill="#f3e7c4" stroke="#1a0a06" stroke-width="2">
-            <rect x="80" y="120" width="100" height="50"/>
-            <rect x="620" y="200" width="120" height="50"/>
-            <rect x="60" y="660" width="120" height="50"/>
-          </g>
-          <g stroke="#1a0a06" stroke-width="1.5">
-            <line x1="95" y1="135" x2="165" y2="135"/>
-            <line x1="95" y1="150" x2="155" y2="150"/>
-            <line x1="635" y1="215" x2="725" y2="215"/>
-            <line x1="635" y1="230" x2="710" y2="230"/>
-            <line x1="75" y1="675" x2="165" y2="675"/>
-            <line x1="75" y1="690" x2="155" y2="690"/>
-          </g>
-          <!-- vertical stripes -->
-          <g opacity="0.78">
-            <rect x="160" y="40" width="22" height="720" fill="#1a0a06"/>
-            <rect x="620" y="40" width="40" height="720" fill="#1a0a06"/>
-            <rect x="710" y="40" width="22" height="720" fill="#f3e7c4"/>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#1a0a06" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#1a0a06" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>פנימה · שאל · רשום · פנימה</span>
-    <span>05 — BUSINESS SCAN</span>
-  </div>
-</section>
-
-<!-- ============ 6. הליכה ============ -->
-<section class="fold f6" id="s6" data-label="06-walking">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 06 / X</span><span class="rule"></span><span class="eyebrow">אקטיבי · עיבוד בתנועה</span></div>
-    <span class="pill">3 פנימה · 6 החוצה</span>
-  </div>
-
-  <div class="grid flip">
-    <div class="text">
-      <h1 class="title">מדיטציית<br/><span class="accent">הליכה.</span></h1>
-      <p class="body">הליכה בקצב נוח, בלי טלפון ובלי אוזניות. נשימה בקצב של 3 פנימה ו־6 החוצה. נותנים למחשבות להופיע ולחלוף מעצמן. התנועה היא הכלי.</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>הליכה מודעת · ללא הסחות</dd>
-        <dt>אימפקט</dt><dd>שחרור חמצן למוח. עיבוד רעיונות תקועים בזמן תנועה.</dd>
-        <dt>סוג</dt><dd><b>אקטיבי</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="c6"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#d63a23"/>
-        <g clip-path="url(#c6)">
-          <rect x="40" y="40" width="720" height="720" fill="#d63a23"/>
-          <!-- ground line -->
-          <line x1="40" y1="640" x2="760" y2="640" stroke="#0e2a1b" stroke-width="3"/>
-          <!-- sun -->
-          <circle cx="640" cy="200" r="80" fill="#f5b820"/>
-          <!-- three walking figures with stripes -->
-          <!-- figure A (back, dark green) -->
-          <g>
-            <circle cx="220" cy="320" r="44" fill="#0e2a1b"/>
-            <path d="M 200 360 L 200 540 L 180 640 L 200 640 L 220 540 L 240 640 L 260 640 L 240 540 L 240 360 Z" fill="#0e2a1b"/>
-            <!-- arm swing -->
-            <line x1="240" y1="400" x2="280" y2="500" stroke="#0e2a1b" stroke-width="14" stroke-linecap="round"/>
-            <line x1="200" y1="400" x2="170" y2="490" stroke="#0e2a1b" stroke-width="14" stroke-linecap="round"/>
-          </g>
-          <!-- figure B (middle, navy) -->
-          <g>
-            <circle cx="400" cy="300" r="46" fill="#1a1656"/>
-            <path d="M 380 340 L 380 540 L 360 640 L 380 640 L 400 540 L 420 640 L 440 640 L 420 540 L 420 340 Z" fill="#1a1656"/>
-            <line x1="420" y1="385" x2="465" y2="475" stroke="#1a1656" stroke-width="14" stroke-linecap="round"/>
-            <line x1="380" y1="385" x2="345" y2="465" stroke="#1a1656" stroke-width="14" stroke-linecap="round"/>
-            <!-- breath in front -->
-            <g fill="none" stroke="#0e2a1b" stroke-width="2">
-              <path d="M 490 360 Q 530 350 540 320"/>
-              <path d="M 490 380 Q 540 380 560 350"/>
-            </g>
-          </g>
-          <!-- figure C (front, dark) -->
-          <g>
-            <circle cx="580" cy="320" r="44" fill="#0e2a1b"/>
-            <path d="M 560 360 L 560 540 L 540 640 L 560 640 L 580 540 L 600 640 L 620 640 L 600 540 L 600 360 Z" fill="#0e2a1b"/>
-            <line x1="600" y1="400" x2="640" y2="490" stroke="#0e2a1b" stroke-width="14" stroke-linecap="round"/>
-            <line x1="560" y1="400" x2="530" y2="500" stroke="#0e2a1b" stroke-width="14" stroke-linecap="round"/>
-          </g>
-          <!-- vertical stripes -->
-          <g opacity="0.78">
-            <rect x="100" y="40" width="40" height="720" fill="#0e2a1b"/>
-            <rect x="320" y="40" width="22" height="720" fill="#f5b820"/>
-            <rect x="500" y="40" width="22" height="720" fill="#f5b820"/>
-            <rect x="700" y="40" width="40" height="720" fill="#0e2a1b"/>
-          </g>
-          <!-- footprint trail -->
-          <g fill="#0e2a1b">
-            <ellipse cx="80" cy="680" rx="14" ry="8" transform="rotate(-8 80 680)"/>
-            <ellipse cx="160" cy="690" rx="14" ry="8" transform="rotate(-4 160 690)"/>
-            <ellipse cx="260" cy="685" rx="14" ry="8" transform="rotate(-6 260 685)"/>
-            <ellipse cx="360" cy="690" rx="14" ry="8" transform="rotate(-4 360 690)"/>
-            <ellipse cx="460" cy="685" rx="14" ry="8" transform="rotate(-2 460 685)"/>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#0e2a1b" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#0e2a1b" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>צעד · צעד · נשימה · צעד</span>
-    <span>06 — WALKING</span>
-  </div>
-</section>
-
-<!-- ============ 7. טרטקה ============ -->
-<section class="fold f7" id="s7" data-label="07-trataka">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 07 / X</span><span class="rule"></span><span class="eyebrow">תובנות · פוקוס ובהירות</span></div>
-    <span class="pill">דקות בודדות</span>
-  </div>
-
-  <div class="grid">
-    <div class="text">
-      <h1 class="title">״<span class="accent">טרטקה</span>.״</h1>
-      <p class="body">בוהים בנקודה אחת על הקיר בגובה העיניים — ללא מצמוץ. עד שהעיניים דומעות מעט. עוצמים. מנסים לראות את הנקודה בתוך מרכז המצח. זרם המחשבות נעצר.</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>מבט ממוקד · נקודה אחת · ללא מצמוץ</dd>
-        <dt>אימפקט</dt><dd>קיבוע פיזי של המבט עוצר את זרם המחשבות.</dd>
-        <dt>סוג</dt><dd><b>תובנות</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="c7"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#ff2424"/>
-        <g clip-path="url(#c7)">
-          <rect x="40" y="40" width="720" height="720" fill="#ff2424"/>
-          <!-- large face fills frame -->
-          <ellipse cx="400" cy="440" rx="280" ry="320" fill="#f1ece2"/>
-          <!-- hair -->
-          <path d="M 120 280 Q 400 100 680 280 L 680 380 Q 540 280 400 280 Q 260 280 120 380 Z" fill="#0a0a0a"/>
-          <!-- crosshair on face -->
-          <line x1="400" y1="100" x2="400" y2="780" stroke="#0a0a0a" stroke-width="1.5" opacity="0.55"/>
-          <line x1="40" y1="440" x2="760" y2="440" stroke="#0a0a0a" stroke-width="1.5" opacity="0.55"/>
-          <!-- left eye (closed line) -->
-          <path d="M 290 430 Q 320 444 350 430" stroke="#0a0a0a" stroke-width="5" fill="none" stroke-linecap="round"/>
-          <!-- right eye (open, locked) -->
-          <ellipse cx="490" cy="435" rx="42" ry="26" fill="#f1ece2" stroke="#0a0a0a" stroke-width="4"/>
-          <ellipse cx="490" cy="435" rx="22" ry="22" fill="#0a0a0a"/>
-          <circle cx="498" cy="428" r="4" fill="#f1ece2"/>
-          <!-- eyebrows -->
-          <path d="M 280 390 L 360 388" stroke="#0a0a0a" stroke-width="5" stroke-linecap="round"/>
-          <path d="M 450 388 L 530 390" stroke="#0a0a0a" stroke-width="5" stroke-linecap="round"/>
-          <!-- nose -->
-          <path d="M 400 460 L 400 540 Q 400 555 385 555" stroke="#0a0a0a" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <!-- mouth -->
-          <path d="M 360 620 Q 400 632 440 620" stroke="#0a0a0a" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <!-- vertical stripes (sparse, just two near edges) -->
-          <g opacity="0.78">
-            <rect x="110" y="40" width="22" height="720" fill="#0a0a0a"/>
-            <rect x="680" y="40" width="36" height="720" fill="#0a0a0a"/>
-          </g>
-          <!-- THE RED DOT, focal -->
-          <circle cx="400" cy="220" r="22" fill="#ff2424" stroke="#0a0a0a" stroke-width="3"/>
-          <!-- sight line -->
-          <line x1="490" y1="435" x2="400" y2="240" stroke="#ff2424" stroke-width="2" stroke-dasharray="4 6"/>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#f1ece2" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#f1ece2" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>בהה · אל תמצמץ · עצום · ראה</span>
-    <span>07 — TRATAKA</span>
-  </div>
-</section>
-
-<!-- ============ 8. יוגה נידרה ============ -->
-<section class="fold f8" id="s8" data-label="08-yoga-nidra">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 08 / X</span><span class="rule"></span><span class="eyebrow">הרפיה · התאוששות עמוקה</span></div>
-    <span class="pill">NSDR · 20–30 דק׳</span>
-  </div>
-
-  <div class="grid flip">
-    <div class="text">
-      <h1 class="title">יוגה<br/><span class="accent">נידרה.</span></h1>
-      <p class="body">שוכבים על הגב, ללא תנועה. סורקים חלקי גוף ועוקבים אחר הנשימה — נשארים על התפר הדק שבין ערנות לשינה. הגוף ישן. התודעה לא.</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>הרפיה פיזיולוגית מלאה <b>(NSDR)</b></dd>
-        <dt>אימפקט</dt><dd>30 דקות ≈ 2–3 שעות שינה עמוקה. מחדש מאגרי דופמין.</dd>
-        <dt>סוג</dt><dd><b>הרפיה</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="c8"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#ff7a8a"/>
-        <g clip-path="url(#c8)">
-          <rect x="40" y="40" width="720" height="720" fill="#ff7a8a"/>
-          <!-- moon -->
-          <circle cx="640" cy="180" r="80" fill="#ffd0b8"/>
-          <circle cx="610" cy="170" r="60" fill="#ff7a8a"/>
-          <!-- stars -->
-          <g fill="#ffd0b8">
-            <circle cx="120" cy="140" r="3"/>
-            <circle cx="200" cy="100" r="2"/>
-            <circle cx="320" cy="160" r="3"/>
-            <circle cx="500" cy="120" r="2"/>
-            <circle cx="160" cy="220" r="2"/>
-          </g>
-          <!-- reclining body horizontal -->
-          <!-- pillow -->
-          <ellipse cx="200" cy="540" rx="100" ry="40" fill="#1a1656"/>
-          <!-- head -->
-          <ellipse cx="240" cy="500" rx="80" ry="90" fill="#ffd0b8"/>
-          <!-- hair fanned -->
-          <path d="M 160 480 Q 120 540 180 580 L 260 560 Q 220 520 200 470 Z" fill="#1a1656"/>
-          <!-- body horizontal -->
-          <path d="M 320 480 Q 460 460 600 480 L 740 510 L 740 580 L 320 580 Z" fill="#ffd0b8"/>
-          <!-- arm along body -->
-          <rect x="320" y="540" width="380" height="40" fill="#ffd0b8"/>
-          <!-- legs taper -->
-          <path d="M 600 510 L 760 530 L 760 560 L 600 580 Z" fill="#ffd0b8"/>
-          <!-- closed eye -->
-          <path d="M 220 490 Q 240 500 260 490" stroke="#1a1656" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <!-- soft smile -->
-          <path d="M 230 540 Q 245 548 260 540" stroke="#1a1656" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <!-- breath waves above body -->
-          <g fill="none" stroke="#ffd0b8" stroke-width="2" opacity="0.85">
-            <path d="M 60 380 Q 200 350 360 380 T 760 380"/>
-            <path d="M 60 410 Q 200 380 360 410 T 760 410"/>
-          </g>
-          <!-- HORIZONTAL stripes overlay (since pose is horizontal) -->
-          <g opacity="0.55">
-            <rect x="40" y="610" width="720" height="14" fill="#ffd0b8"/>
-            <rect x="40" y="650" width="720" height="20" fill="#ff7a8a"/>
-            <rect x="40" y="690" width="720" height="14" fill="#ffd0b8"/>
-          </g>
-          <!-- z's for sleep -->
-          <g fill="#ffd0b8" font-family="Frank Ruhl Libre" font-weight="900">
-            <text x="120" y="320" font-size="44">z</text>
-            <text x="180" y="280" font-size="32">z</text>
-            <text x="240" y="240" font-size="24">z</text>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#ffd0b8" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#ffd0b8" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>שכב · עקוב · אל תזוז · נשום</span>
-    <span>08 — YOGA NIDRA</span>
-  </div>
-</section>
-
-<!-- ============ 9. מדיטציית מוות ============ -->
-<section class="fold f9" id="s9" data-label="09-death">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 09 / X</span><span class="rule"></span><span class="eyebrow">תובנות · פרספקטיבה וסדרי עדיפויות</span></div>
-    <span class="pill">20 דק׳</span>
-  </div>
-
-  <div class="grid">
-    <div class="text">
-      <h1 class="title">מדיטציית<br/><span class="accent">מוות.</span></h1>
-      <p class="body">עוצמים עיניים ומדמיינים את עצמנו בעוד עשרות שנים — עשרים דקות לפני רגע הסיום. הגוף זקן, הנשימה איטית. שואלים את ה"אני הזקן": מה הייתי משנה? למה אני חייב לשים לב עכשיו? מה התובנה הכי גדולה שאתה יכול לתת לי?</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>מסע בזמן · שיחה עם ה"אני העתידי"</dd>
-        <dt>אימפקט</dt><dd>חיתוך רעשי רקע. מזקקת את <b>מה שבאמת חשוב</b> ומייצרת דחיפות לפעול לפי הערכים האמיתיים.</dd>
-        <dt>סוג</dt><dd><b>תובנות</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="c9"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#c79d5a"/>
-        <g clip-path="url(#c9)">
-          <rect x="40" y="40" width="720" height="720" fill="#c79d5a"/>
-          <!-- profile face (right-facing, elder) -->
-          <!-- silver hair back -->
-          <path d="M 280 200 Q 200 280 200 400 Q 200 520 270 600 L 380 600 L 380 220 Z" fill="#1a1a2e"/>
-          <!-- aged face profile -->
-          <path d="M 380 220
-                   Q 540 240 580 360
-                   Q 590 410 540 430
-                   L 580 470
-                   Q 590 495 555 505
-                   L 530 515
-                   Q 550 540 525 555
-                   Q 505 580 475 580
-                   L 380 580 Z" fill="#e8d4a8"/>
-          <!-- silver hair top -->
-          <path d="M 280 220 Q 400 140 560 240 L 560 290 Q 460 240 360 260 Z" fill="#7e7a92"/>
-          <!-- wrinkles -->
-          <g stroke="#1a1a2e" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".75">
-            <path d="M 455 348 Q 480 340 510 348"/>
-            <path d="M 460 410 Q 480 418 510 412"/>
-            <path d="M 480 440 L 515 442"/>
-            <path d="M 490 470 Q 505 475 525 468"/>
-          </g>
-          <!-- closed eye -->
-          <path d="M 470 380 Q 490 392 510 380" stroke="#1a1a2e" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <!-- soft lips -->
-          <path d="M 510 522 Q 525 530 545 522" stroke="#1a1a2e" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <!-- neck/body -->
-          <path d="M 380 580 L 380 720 L 520 720 L 520 580 Z" fill="#e8d4a8"/>
-          <rect x="200" y="690" width="500" height="110" fill="#3d3a52"/>
-          <!-- hourglass left side -->
-          <g transform="translate(135 380)">
-            <line x1="-55" y1="-65" x2="55" y2="-65" stroke="#1a1a2e" stroke-width="5" stroke-linecap="round"/>
-            <line x1="-55" y1="65" x2="55" y2="65" stroke="#1a1a2e" stroke-width="5" stroke-linecap="round"/>
-            <path d="M -45 -65 L 45 -65 L 0 0 L 45 65 L -45 65 L 0 0 Z" fill="#3d3a52" stroke="#1a1a2e" stroke-width="3"/>
-            <!-- sand top remaining -->
-            <path d="M -28 -55 L 28 -55 L 5 -20 L -5 -20 Z" fill="#c79d5a"/>
-            <!-- sand bottom -->
-            <path d="M -32 50 L 32 50 L 28 30 L -28 30 Z" fill="#c79d5a"/>
-            <!-- falling grains -->
-            <circle cx="0" cy="-5" r="2" fill="#c79d5a"/>
-            <circle cx="-2" cy="8" r="2" fill="#c79d5a"/>
-            <circle cx="1" cy="20" r="2" fill="#c79d5a"/>
-          </g>
-          <!-- floating dust particles (time) -->
-          <g fill="#1a1a2e" opacity=".6">
-            <circle cx="660" cy="180" r="3"/>
-            <circle cx="700" cy="260" r="4"/>
-            <circle cx="640" cy="320" r="2"/>
-            <circle cx="690" cy="540" r="3"/>
-            <circle cx="660" cy="620" r="2"/>
-          </g>
-          <!-- vertical stripes overlay -->
-          <g opacity="0.85">
-            <rect x="60" y="40" width="32" height="720" fill="#3d3a52"/>
-            <rect x="240" y="40" width="22" height="720" fill="#1a1a2e"/>
-            <rect x="620" y="40" width="42" height="720" fill="#3d3a52"/>
-            <rect x="700" y="40" width="22" height="720" fill="#1a1a2e"/>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#1a1a2e" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#1a1a2e" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>דמיין · שאל · הקשב · חזור</span>
-    <span>09 — DEATH MEDITATION</span>
-  </div>
-</section>
-
-<!-- ============ 10. סופר-נשימת אש ============ -->
-<section class="fold f10" id="s10" data-label="10-super-fire">
-  <div class="topbar">
-    <div class="row"><span class="num">פרק 10 / X</span><span class="rule"></span><span class="eyebrow">אקטיבי · אנרגיה ופוקוס קצה</span></div>
-    <span class="pill">60 שניות · סבבים</span>
-  </div>
-
-  <div class="grid flip">
-    <div class="text">
-      <h1 class="title">סופר־<br/><span class="accent">נשימת אש.</span></h1>
-      <p class="body">סבב של 60 שניות שאיפה־נשיפה אגרסיביות דרך האף (~2 לשנייה). עוצרים את הנשימה לזמן ארוך ככל שניתן וצוללים פנימה אל ה"באז". כשחייבים — חוזרים מיד לסבב הבא.</p>
-      <dl class="meta">
-        <dt>טכניקה</dt><dd>היפר־ונטילציה מבוקרת · עצירות ארוכות בסבבים</dd>
-        <dt>אימפקט</dt><dd>"סטירה" למערכת העצבים. פוקוס חד כתער ו<b>חיוניות קיצונית</b>.</dd>
-        <dt>סוג</dt><dd><b>אקטיבי</b></dd>
-      </dl>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs><clipPath id="c10"><circle cx="400" cy="400" r="360"/></clipPath></defs>
-        <circle cx="400" cy="400" r="360" fill="#e6112d"/>
-        <g clip-path="url(#c10)">
-          <rect x="40" y="40" width="720" height="720" fill="#e6112d"/>
-          <!-- explosive radiating rays -->
-          <g fill="#ff5a00">
-            <polygon points="400,400 80,160 180,150"/>
-            <polygon points="400,400 220,60 320,110"/>
-            <polygon points="400,400 720,160 620,150"/>
-            <polygon points="400,400 580,60 480,110"/>
-            <polygon points="400,400 60,400 80,470"/>
-            <polygon points="400,400 740,400 720,470"/>
-            <polygon points="400,400 150,720 80,650"/>
-            <polygon points="400,400 650,720 720,650"/>
-            <polygon points="400,400 400,760 360,720"/>
-            <polygon points="400,400 400,760 440,720"/>
-          </g>
-          <!-- pulsing rings -->
-          <g fill="none" stroke="#ffe14a" stroke-width="2" opacity=".55">
-            <circle cx="400" cy="400" r="200"/>
-            <circle cx="400" cy="400" r="260"/>
-            <circle cx="400" cy="400" r="320"/>
-          </g>
-          <!-- front face (lime) -->
-          <ellipse cx="400" cy="400" rx="180" ry="220" fill="#c7f000"/>
-          <!-- hair top -->
-          <path d="M 230 290 Q 400 130 570 290 L 570 360 Q 480 290 400 290 Q 320 290 230 360 Z" fill="#0a0a0a"/>
-          <!-- intense wide eyes -->
-          <ellipse cx="350" cy="390" rx="30" ry="24" fill="#fff" stroke="#0a0a0a" stroke-width="3"/>
-          <circle cx="350" cy="390" r="14" fill="#0a0a0a"/>
-          <circle cx="356" cy="384" r="4" fill="#fff"/>
-          <ellipse cx="450" cy="390" rx="30" ry="24" fill="#fff" stroke="#0a0a0a" stroke-width="3"/>
-          <circle cx="450" cy="390" r="14" fill="#0a0a0a"/>
-          <circle cx="456" cy="384" r="4" fill="#fff"/>
-          <!-- eyebrows raised -->
-          <path d="M 318 346 L 384 342" stroke="#0a0a0a" stroke-width="5" stroke-linecap="round"/>
-          <path d="M 416 342 L 482 346" stroke="#0a0a0a" stroke-width="5" stroke-linecap="round"/>
-          <!-- nose -->
-          <path d="M 400 415 L 400 490 Q 400 505 384 505" stroke="#0a0a0a" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <!-- open mouth (exhaling) -->
-          <ellipse cx="400" cy="552" rx="40" ry="26" fill="#0a0a0a"/>
-          <!-- shoulders -->
-          <path d="M 320 600 L 320 720 L 480 720 L 480 600 Z" fill="#c7f000"/>
-          <rect x="150" y="690" width="500" height="110" fill="#0a0a0a"/>
-          <!-- breath streams down from mouth -->
-          <g stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round">
-            <path d="M 376 580 Q 376 630 358 670"/>
-            <path d="M 400 588 L 400 678"/>
-            <path d="M 424 580 Q 424 630 442 670"/>
-          </g>
-          <!-- bright sparks around head -->
-          <g fill="#ffe14a">
-            <circle cx="120" cy="180" r="9"/>
-            <circle cx="680" cy="200" r="11"/>
-            <circle cx="100" cy="500" r="7"/>
-            <circle cx="720" cy="540" r="9"/>
-            <circle cx="180" cy="80" r="6"/>
-            <circle cx="600" cy="80" r="7"/>
-          </g>
-          <!-- vertical stripes overlay -->
-          <g opacity="0.85">
-            <rect x="170" y="40" width="28" height="720" fill="#0a0a0a"/>
-            <rect x="600" y="40" width="34" height="720" fill="#0a0a0a"/>
-            <rect x="680" y="40" width="22" height="720" fill="#fff"/>
-          </g>
-        </g>
-        <circle cx="400" cy="400" r="360" fill="none" stroke="#0a0a0a" stroke-width="5"/>
-        <circle cx="400" cy="400" r="382" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-dasharray="3 14"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="footbar">
-    <span>60 שניות · עצירה · 60 שניות · עצירה</span>
-    <span>10 — SUPER FIRE BREATH</span>
-  </div>
-</section>
-
-<!-- ============ MEDITATION DOCK ============ -->
-<div class="dock" id="dock">
-  <button class="audio-btn" id="audioBtn" aria-label="מוסיקה: הפעל/השתק" title="מוסיקה">
-    <svg viewBox="0 0 24 24" id="audioIcon" aria-hidden="true">
-      <path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3z"/>
-      <path d="M15.5 8c1.5 1.5 1.5 6.5 0 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M18 5c3 3 3 11 0 14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity=".75"/>
-    </svg>
-  </button>
-  <button class="timer-pill" id="timerPill" aria-label="טיימר מדיטציה">
-    <span class="label">טיימר</span>
-    <span class="time" id="pillTime">10:00</span>
-    <span class="ico" id="pillIco">
-      <svg viewBox="0 0 14 14" aria-hidden="true"><polygon points="3,1 13,7 3,13" fill="currentColor"/></svg>
-    </span>
-  </button>
-</div>
-
-<div class="timer-panel" id="timerPanel" role="dialog" aria-label="טיימר מדיטציה">
-  <div class="ring">
-    <svg viewBox="0 0 170 170">
-      <circle cx="85" cy="85" r="76" fill="none" stroke="#0c0a0f" stroke-width="3" opacity=".12"/>
-      <circle cx="85" cy="85" r="76" fill="none" stroke="#e6112d" stroke-width="4" id="progRing"
-              stroke-dasharray="477.5" stroke-dashoffset="0" stroke-linecap="round"/>
-    </svg>
-    <div class="big" id="bigTime">10:00</div>
-  </div>
-  <div class="presets" id="presets">
-    <button data-min="5">5</button>
-    <button data-min="10" class="active">10</button>
-    <button data-min="15">15</button>
-    <button data-min="20">20</button>
-    <button data-min="25">25</button>
-    <button data-min="30">30</button>
-  </div>
-  <div class="controls">
-    <button class="start" id="startBtn">התחל</button>
-    <button class="reset" id="resetBtn">אפס</button>
-  </div>
-</div>
-
-<script>
-  /* ===== Ambient melodic audio (per-fold meditation scenes) ===== */
-  let actx=null, master=null, started=false, muted=false;
-  let bus=null, delay=null, delayWet=null;
-  let currentDrones = [];
-  let melodyGen = 0, activePreset = null;
-  const audioBtn = document.getElementById('audioBtn');
-  const TARGET_VOL = 0.16;
-
-  // Per-fold musical scenes — all meditative, tuned to the technique's pace.
-  // drones: [{f:freq, d:detune cents, g:gain}], scale: [Hz...],
-  // iLo/iHi: ms between notes, dur: note length, wave, filt: lowpass Hz, vol: per-note peak.
-  const musicPresets = {
-    s0:  {drones:[{f:110,d:0,g:.18},{f:110,d:8,g:.12},{f:164.81,d:-4,g:.10}],                       scale:[261.63,293.66,329.63,392,440,523.25,587.33,659.25],          iLo:2400,iHi:6000, dur:5.5, wave:'triangle', filt:2000, vol:.09},
-    s1:  {drones:[{f:130.81,d:0,g:.15},{f:130.81,d:7,g:.10},{f:196,d:-4,g:.10}],                    scale:[261.63,311.13,349.23,392,466.16,523.25,622.25,698.46],       iLo:1500,iHi:3500, dur:4,   wave:'sine',     filt:2400, vol:.08},
-    s2:  {drones:[{f:146.83,d:0,g:.18},{f:146.83,d:5,g:.12},{f:220,d:-3,g:.10}],                    scale:[293.66,349.23,392,440,523.25,587.33,659.25,783.99],          iLo:1200,iHi:2800, dur:3.5, wave:'triangle', filt:1800, vol:.08},
-    s3:  {drones:[{f:110,d:0,g:.22},{f:110,d:10,g:.14},{f:164.81,d:-4,g:.10},{f:220,d:0,g:.06}],     scale:[220,261.63,311.13,329.63,415.30,440,523.25],                 iLo:4000,iHi:8000, dur:7,   wave:'sine',     filt:1400, vol:.09},
-    s4:  {drones:[{f:98,d:0,g:.20},{f:98,d:6,g:.12},{f:146.83,d:-5,g:.10}],                          scale:[196,261.63,293.66,392,440,523.25,587.33],                    iLo:3500,iHi:7000, dur:6.5, wave:'sine',     filt:1600, vol:.08},
-    s5:  {drones:[{f:123.47,d:0,g:.18},{f:123.47,d:8,g:.12},{f:185,d:-4,g:.10}],                    scale:[246.94,277.18,329.63,369.99,415.30,493.88,554.37,659.25],   iLo:2800,iHi:5500, dur:5,   wave:'triangle', filt:1900, vol:.08},
-    s6:  {drones:[{f:138.59,d:0,g:.16},{f:138.59,d:7,g:.10},{f:207.65,d:-4,g:.10}],                  scale:[277.18,311.13,349.23,415.30,466.16,554.37,622.25],          iLo:2200,iHi:4500, dur:5,   wave:'sine',     filt:2200, vol:.08},
-    s7:  {drones:[{f:130.81,d:0,g:.24},{f:130.81,d:5,g:.14}],                                        scale:[261.63,329.63,392,523.25],                                   iLo:5000,iHi:10000,dur:8,   wave:'sine',     filt:1300, vol:.09},
-    s8:  {drones:[{f:87.31,d:0,g:.25},{f:87.31,d:8,g:.16},{f:130.81,d:-5,g:.10}],                    scale:[174.61,220,261.63,349.23,440],                               iLo:6000,iHi:14000,dur:10,  wave:'sine',     filt:1100, vol:.08},
-    s9:  {drones:[{f:103.83,d:0,g:.22},{f:103.83,d:9,g:.14},{f:155.56,d:-5,g:.10}],                  scale:[207.65,246.94,311.13,369.99,415.30,493.88],                 iLo:4500,iHi:9000, dur:7,   wave:'sine',     filt:1400, vol:.08},
-    s10: {drones:[{f:174.61,d:0,g:.18},{f:174.61,d:5,g:.12},{f:261.63,d:-3,g:.10}],                  scale:[349.23,415.30,466.16,523.25,622.25,698.46,830.61],          iLo:800, iHi:2000, dur:3,   wave:'triangle', filt:2200, vol:.07},
-  };
-
-  function startAudio(){
-    if(started) return;
-    started = true;
-    try{
-      const AC = window.AudioContext || window.webkitAudioContext;
-      actx = new AC();
-      master = actx.createGain();
-      master.gain.value = 0;
-      master.gain.linearRampToValueAtTime(muted? 0 : TARGET_VOL, actx.currentTime + 2.5);
-      master.connect(actx.destination);
-
-      bus = actx.createBiquadFilter();
-      bus.type = 'lowpass';
-      bus.frequency.value = 2000;
-      bus.Q.value = 0.6;
-      bus.connect(master);
-
-      delay = actx.createDelay(4);
-      delay.delayTime.value = 0.5;
-      const fb = actx.createGain(); fb.gain.value = 0.55;
-      delayWet = actx.createGain(); delayWet.gain.value = 0.45;
-      delay.connect(fb); fb.connect(delay);
-      delay.connect(delayWet); delayWet.connect(bus);
-
-      playPreset('s0');
-    }catch(e){ started=false; console.warn('Audio init failed', e); }
-  }
-
-  function fadeOutDrones(fadeTime){
-    if(!actx) return;
-    const t = actx.currentTime;
-    currentDrones.forEach(d => {
-      try{
-        d.g.gain.cancelScheduledValues(t);
-        d.g.gain.setValueAtTime(d.g.gain.value, t);
-        d.g.gain.linearRampToValueAtTime(0, t + fadeTime);
-        d.o.stop(t + fadeTime + 0.3);
-        if(d.lfo) d.lfo.stop(t + fadeTime + 0.3);
-      }catch(_){}
-    });
-    currentDrones = [];
-  }
-
-  function playPreset(key){
-    if(!actx || !master || !bus) return;
-    if(activePreset === key) return;
-    activePreset = key;
-    const preset = musicPresets[key];
-    if(!preset) return;
-
-    const FADE = 3;
-    fadeOutDrones(FADE);
-
-    // smoothly morph filter cutoff
-    bus.frequency.cancelScheduledValues(actx.currentTime);
-    bus.frequency.setValueAtTime(bus.frequency.value, actx.currentTime);
-    bus.frequency.linearRampToValueAtTime(preset.filt, actx.currentTime + 2.5);
-
-    // start new drones
-    preset.drones.forEach(d => {
-      const o = actx.createOscillator();
-      o.type = 'sine';
-      o.frequency.value = d.f;
-      o.detune.value = d.d;
-      const g = actx.createGain();
-      g.gain.setValueAtTime(0, actx.currentTime);
-      g.gain.linearRampToValueAtTime(d.g, actx.currentTime + FADE);
-      o.connect(g);
-      g.connect(bus);
-      o.start();
-      const lfo = actx.createOscillator();
-      lfo.type = 'sine';
-      lfo.frequency.value = 0.05 + Math.random()*0.08;
-      const lfoGain = actx.createGain();
-      lfoGain.gain.value = 4;
-      lfo.connect(lfoGain);
-      lfoGain.connect(o.detune);
-      lfo.start();
-      currentDrones.push({o, g, lfo});
-    });
-
-    // melody scheduler with generation counter so old schedulers stop
-    melodyGen++;
-    const myGen = melodyGen;
-    function tick(){
-      if(myGen !== melodyGen || !actx) return;
-      const t = actx.currentTime;
-      const f = preset.scale[Math.floor(Math.random()*preset.scale.length)];
-      const o = actx.createOscillator();
-      o.type = preset.wave;
-      o.frequency.value = f;
-      const g = actx.createGain();
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(preset.vol, t + 0.9);
-      g.gain.exponentialRampToValueAtTime(0.0005, t + preset.dur);
-      o.connect(g);
-      g.connect(bus);
-      g.connect(delay);
-      o.start(t);
-      o.stop(t + preset.dur + 0.3);
-      setTimeout(tick, preset.iLo + Math.random()*(preset.iHi - preset.iLo));
-    }
-    setTimeout(tick, 1500);
-  }
-
-  function setMuted(m){
-    muted = m;
-    audioBtn.classList.toggle('muted', muted);
-    applyAudioState();
-  }
-
-  function applyAudioState(){
-    if(!actx || !master) return;
-    const now = actx.currentTime;
-    master.gain.cancelScheduledValues(now);
-    master.gain.setValueAtTime(master.gain.value, now);
-    master.gain.linearRampToValueAtTime(muted ? 0 : TARGET_VOL, now + 0.45);
-    if(muted){
-      // suspend after fade so it's truly silent and CPU-light
-      setTimeout(() => {
-        if(muted && actx && actx.state === 'running'){
-          try{ actx.suspend(); }catch(_){}
-        }
-      }, 600);
-    }else{
-      if(actx.state === 'suspended'){
-        try{ actx.resume(); }catch(_){}
-      }
-    }
-  }
-
-  audioBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if(!started){
-      startAudio();
-      applyAudioState();
-      return;
-    }
-    setMuted(!muted);
-  });
-
-  // Aggressive auto-start: create context as early as possible; resume on
-  // any user gesture (mousemove counts — effectively instant).
-  function ensureAudio(){
-    if(!started) startAudio();
-    if(!muted && actx && actx.state === 'suspended'){
-      try{ actx.resume(); }catch(_){}
-    }
-  }
-  ensureAudio();
-  window.addEventListener('DOMContentLoaded', ensureAudio);
-  window.addEventListener('load', ensureAudio);
-  ['pointerdown','pointermove','mousemove','keydown','touchstart','scroll','wheel','click','focus'].forEach(ev => {
-    window.addEventListener(ev, ensureAudio, {passive:true});
-  });
-
-  function omSound(){
-    if(!actx || !master) return;
-    // make sure context is awake (timer might fire while muted/suspended)
-    if(actx.state === 'suspended'){ try{ actx.resume(); }catch(_){} }
-    const t = actx.currentTime;
-
-    const out = actx.createGain();
-    out.gain.setValueAtTime(0, t);
-    out.gain.linearRampToValueAtTime(0.38, t + 0.9);
-    out.gain.setValueAtTime(0.38, t + 4.5);
-    out.gain.linearRampToValueAtTime(0, t + 8.5);
-
-    const filt = actx.createBiquadFilter();
-    filt.type = 'lowpass';
-    filt.frequency.value = 750;
-    filt.Q.value = 1.2;
-    out.connect(filt);
-    filt.connect(actx.destination);  // bypass master so Om is audible even if music is muted
-
-    // formant-style partials for a vocal "om"
-    const partials = [
-      {f:110, g:1.00, d:0},
-      {f:110, g:0.45, d:6},
-      {f:220, g:0.55, d:0},
-      {f:220, g:0.22, d:-5},
-      {f:330, g:0.30, d:0},
-      {f:440, g:0.16, d:0},
-      {f:660, g:0.09, d:0},
-    ];
-    partials.forEach(p => {
-      const o = actx.createOscillator();
-      o.type = 'sine';
-      o.frequency.value = p.f;
-      o.detune.value = p.d;
-      const g = actx.createGain();
-      g.gain.value = p.g;
-      o.connect(g);
-      g.connect(out);
-      o.start(t);
-      o.stop(t + 9);
-    });
-
-    // gentle vibrato on the filter
-    const lfo = actx.createOscillator();
-    lfo.type = 'sine';
-    lfo.frequency.value = 5;
-    const lfoGain = actx.createGain();
-    lfoGain.gain.value = 60;
-    lfo.connect(lfoGain);
-    lfoGain.connect(filt.frequency);
-    lfo.start(t);
-    lfo.stop(t + 9);
-  }
-
-  /* ===== Timer ===== */
-  const pill      = document.getElementById('timerPill');
-  const panel     = document.getElementById('timerPanel');
-  const pillTime  = document.getElementById('pillTime');
-  const pillIco   = document.getElementById('pillIco');
-  const bigTime   = document.getElementById('bigTime');
-  const progRing  = document.getElementById('progRing');
-  const presetsEl = document.getElementById('presets');
-  const startBtn  = document.getElementById('startBtn');
-  const resetBtn  = document.getElementById('resetBtn');
-
-  const CIRC = 2 * Math.PI * 76;
-  progRing.style.strokeDasharray = CIRC;
-
-  let duration = 10*60;
-  let remaining = duration;
-  let running = false;
-  let endAt = 0;
-  let raf = 0;
-
-  const PLAY_ICON  = '<svg viewBox="0 0 14 14" aria-hidden="true"><polygon points="3,1 13,7 3,13" fill="currentColor"/></svg>';
-  const PAUSE_ICON = '<svg viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" fill="currentColor"/><rect x="8.5" y="1" width="3.5" height="12" fill="currentColor"/></svg>';
-
-  function fmt(s){
-    s = Math.max(0, Math.round(s));
-    const m = Math.floor(s/60);
-    const sec = s%60;
-    return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
-  }
-  function paint(){
-    pillTime.textContent = fmt(remaining);
-    bigTime.textContent  = fmt(remaining);
-    const pct = duration>0 ? remaining/duration : 0;
-    progRing.style.strokeDashoffset = CIRC * (1 - pct);
-    pillIco.innerHTML = running ? PAUSE_ICON : PLAY_ICON;
-    startBtn.textContent = running ? 'השהה' : (remaining < duration && remaining > 0 ? 'המשך' : 'התחל');
-  }
-  paint();
-
-  function loop(){
-    if(!running) return;
-    remaining = (endAt - Date.now())/1000;
-    if(remaining <= 0){
-      remaining = 0;
-      running = false;
-      pill.classList.add('complete');
-      paint();
-      omSound();
-      setTimeout(()=>pill.classList.remove('complete'), 4400);
-      return;
-    }
-    paint();
-    raf = requestAnimationFrame(loop);
-  }
-
-  function start(){
-    if(!started) startAudio();
-    if(remaining <= 0) remaining = duration;
-    endAt = Date.now() + remaining*1000;
-    running = true;
-    paint();
-    loop();
-  }
-  function pauseT(){
-    running = false;
-    cancelAnimationFrame(raf);
-    paint();
-  }
-  function resetT(){
-    running = false;
-    cancelAnimationFrame(raf);
-    remaining = duration;
-    pill.classList.remove('complete');
-    paint();
-  }
-
-  startBtn.addEventListener('click', (e) => { e.stopPropagation(); running ? pauseT() : start(); });
-  resetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetT(); });
-
-  /* editable big-time display \u2014 click and type */
-  bigTime.setAttribute('contenteditable','true');
-  bigTime.setAttribute('inputmode','numeric');
-  bigTime.setAttribute('spellcheck','false');
-  bigTime.setAttribute('title','\u05dc\u05d7\u05e5 \u05d5\u05d4\u05e7\u05dc\u05d3 \u05d6\u05de\u05df (\u05dc\u05de\u05e9\u05dc 7:30)');
-
-  function parseTimeInput(s){
-    s = (s||'').trim().replace(/[^\d:]/g,'');
-    if(!s) return null;
-    let total;
-    if(s.includes(':')){
-      const parts = s.split(':');
-      const m = parseInt(parts[0],10) || 0;
-      const sec = Math.min(59, Math.max(0, parseInt(parts[1]||'0',10) || 0));
-      total = m*60 + sec;
-    }else{
-      total = parseInt(s,10) * 60;
-    }
-    if(!isFinite(total) || total < 1) return null;
-    return Math.min(180*60, total);
-  }
-
-  bigTime.addEventListener('click', (e) => { e.stopPropagation(); });
-  bigTime.addEventListener('mousedown', (e) => { e.stopPropagation(); });
-  bigTime.addEventListener('focus', () => {
-    if(running) pauseT();
-    setTimeout(() => {
-      const range = document.createRange();
-      range.selectNodeContents(bigTime);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }, 0);
-  });
-  bigTime.addEventListener('keydown', (e) => {
-    e.stopPropagation();
-    if(e.key === 'Enter'){ e.preventDefault(); bigTime.blur(); }
-    if(e.key === 'Escape'){ e.preventDefault(); paint(); bigTime.blur(); }
-  });
-  bigTime.addEventListener('blur', () => {
-    const secs = parseTimeInput(bigTime.textContent);
-    if(secs !== null){
-      duration = secs;
-      if(!running) remaining = duration;
-      presetsEl.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-      const exact = presetsEl.querySelector('[data-min="' + (secs/60) + '"]');
-      if(exact) exact.classList.add('active');
-    }
-    paint();
-  });
-
-  presetsEl.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const b = e.target.closest('button');
-    if(!b) return;
-    presetsEl.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    duration = parseInt(b.dataset.min,10)*60;
-    if(!running) remaining = duration;
-    paint();
-  });
-
-  pill.addEventListener('click', (e) => {
-    e.stopPropagation();
-    panel.classList.toggle('open');
-  });
-  document.addEventListener('click', (e) => {
-    if(panel.classList.contains('open') && !panel.contains(e.target) && !pill.contains(e.target)){
-      panel.classList.remove('open');
-    }
-  });
-  // Esc closes panel
-  window.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape' && panel.classList.contains('open')) panel.classList.remove('open');
-  });
-
-  /* ===== Brainwave overlay generator ===== */
-  const waveTypes = {
-    alpha: {speed:10, freq:4,  amp:32, harm:0, label:'אלפא · 8–12 Hz'},
-    beta:  {speed:6,  freq:7,  amp:24, harm:4, label:'בטא · 12–30 Hz'},
-    gamma: {speed:3,  freq:14, amp:18, harm:6, label:'גמא · 30–100 Hz'},
-    delta: {speed:20, freq:1,  amp:40, harm:0, label:'דלתא · 0.5–4 Hz'},
-    theta: {speed:13, freq:3,  amp:30, harm:2, label:'תטא · 4–8 Hz'},
-  };
-  function buildWavePath(p){
-    const W=800, mid=50, n=280;
-    let d='';
-    for(let i=0;i<=n;i++){
-      const t=i/n;
-      const x=t*W;
-      const ph=2*Math.PI*p.freq*t;
-      let y=mid-p.amp*Math.sin(ph);
-      if(p.harm) y-=p.harm*Math.sin(ph*3);
-      d+=(i===0?'M ':'L ')+x.toFixed(1)+' '+y.toFixed(1)+' ';
-    }
-    return d;
-  }
-  const waveMap = {f1:'beta',f2:'gamma',f3:'alpha',f4:'alpha',f5:'theta',f6:'alpha',f7:'theta',f8:'delta',f9:'theta',f10:'gamma'};
-  Object.entries(waveMap).forEach(([cls,type]) => {
-    const fig = document.querySelector('.' + cls + ' .figure');
-    if(!fig) return;
-    const p = waveTypes[type];
-    const d = buildWavePath(p);
-    const svg = '<svg viewBox="0 0 800 100" preserveAspectRatio="none" aria-hidden="true"><path d="' + d + '"/></svg>';
-    fig.insertAdjacentHTML('beforeend',
-      '<div class="wave-band">' +
-        '<div class="wave-strip">' +
-          '<div class="wave-track" style="animation-duration:' + p.speed + 's">' +
-            svg + svg +
-          '</div>' +
-        '</div>' +
-        '<span class="wave-label">' + p.label + '</span>' +
-      '</div>'
-    );
-  });
-
-  /* ===== existing scroll progress + dots (unchanged below) ===== */
-  const bar = document.getElementById('bar');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    const max = h.scrollHeight - h.clientHeight;
-    bar.style.width = (h.scrollTop / max * 100) + '%';
-  }, {passive:true});
-
-  const nav = document.getElementById('nav');
-  const folds = document.querySelectorAll('section.fold');
-  folds.forEach((f) => {
-    const a = document.createElement('a');
-    a.href = '#' + f.id;
-    a.title = f.dataset.label || '';
-    nav.appendChild(a);
-  });
-  const dots = nav.querySelectorAll('a');
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(en => {
-      if (en.isIntersecting){
-        en.target.classList.add('seen');
-        const idx = Array.from(folds).indexOf(en.target);
-        dots.forEach((d,i) => d.classList.toggle('active', i===idx));
-        // update dock palette to match current fold
-        document.body.className = document.body.className.replace(/\bdock-s\d+\b/g,'').trim();
-        document.body.classList.add('dock-' + en.target.id);
-        // swap meditation scene to match the fold's technique
-        if(started) playPreset(en.target.id);
-      }
-    });
-  }, {threshold: 0.4});
-  folds.forEach(f => io.observe(f));
-</script>
-</body>
-</html>
+0
+
+0
+×
+המסע לאוורסט
+
+0
+ימים
+0
+דקות
+0
+מטר
+לשלב הבא →
+
+שדרג עצמך כל 30 דקות מדיטציה 
+
+פתחת דמות חדשה
+פעימה
+המשך לתרגל — הדמות הבאה נפתחת בעוד 30 דק׳
+וולר · אתגר המדיטציה
+I / X
+פרק 00
+
+הקדמה
+עשר דרכים להיכנס פנימה.
+ספרייה של תרגולים — מנשימת אש שמייצרת פריצות דרך, דרך מנטרה שקטה שמכבה את הראש, ועד שכיבה חסרת תנועה ששקולה לשעות שינה. כל פרק — טכניקה אחת, צבע אחד, ותחושה אחת.
+
+גלילה ↓
+אקטיבי · תובנות · הרפיה
+00 — INTRO
+פרק 01 / X
+
+אקטיבי · מיקוד מוחי
+2–5 דק׳
+״הטיסה ממריאה.״
+נשימה מכוונת אל המוח — שאיפה קצרה פנימה, נשיפה ארוכה ואיטית החוצה. תשומת הלב נעה בין החלקים: ימין מול שמאל, לוגי מול יצירתי. מדמיינים את הנוירונים נדלקים ויורים לכל עבר.
+טכניקה
+נשימה אסימטרית · מיקוד מוחי
+אימפקט
+חיבור ליכולות המוחיות, המרצה ויזואלית של המחשבה.
+סוג
+אקטיבי
+
+שאיפה קצרה ← נשיפה ארוכה
+ימין · שמאל · ימין · שמאל
+01 — TAKEOFF
+פרק 02 / X
+
+אקטיבי · פתרון בעיות
+60 שניות · עצירה
+״ביזנס צ׳לנג׳.״
+מגדירים אתגר עסקי מתסכל אחד. שישים שניות של נשימת אש מהירה וחזקה דרך האף. עצירה. ובתוך השקט הצפוף הזה — מחפשים פתרון.
+טכניקה
+נשימת אש · עצירת נשימה
+אימפקט
+מעבר לגלי גמא (30–100hz) — תובנות מהירות ופריצות דרך.
+סוג
+אקטיבי
+
+נשם · נשם · עצור · ראה
+02 — BUSINESS CHALLENGE
+פרק 03 / X
+
+תובנות · צלילה לשקט
+20 דק׳
+מדיטציה טרנסדנטלית.
+בוחרים מילה חסרת משמעות וחוזרים עליה בלב — שוב ושוב, ללא מאמץ. כשהמחשבה נודדת מחזירים אותה בעדינות אל המנטרה. המפתח הוא חוסר מאמץ מוחלט.
+טכניקה
+מנטרה אישית · ישיבה בעיניים עצומות
+אימפקט
+עוגן של שקט וחוסן. התובנות מגיעות מיד אחרי.
+סוג
+תובנות
+
+שב · עצום · חזור · רפה
+03 — TM
+פרק 04 / X
+
+תובנות · איפוס מערכת העצבים
+5–5 · קצב נשימה
+״Void.״
+מדמיינים קו של אור מהקודקוד עד הישבן. נושמים בקצב 5–5. בשאיפה האור נדלק מלמעלה למטה. בנשיפה — מלמטה למעלה. המוח רץ. הקו הזה מכבה אותו.
+טכניקה
+קו אור מרכזי · נשימה קצובה
+אימפקט
+חיסול רומינציה. מעבר מיידי לגלי אלפא.
+סוג
+תובנות
+
+קודקוד · לב · בטן · ישבן
+04 — VOID
+פרק 05 / X
+
+תובנות · מהתת־מודע
+מדיטציה + מחברת
+״ביזנס סקאן.״
+נכנסים פנימה. סורקים אברים ושואלים שאלות — מוח, עיניים, אוזניים, לב, בטן. פותחים עיניים, רושמים את התשובות שצפו, וחוזרים פנימה. שוב.
+טכניקה
+סריקת גוף · שאלות נקודתיות · כתיבה
+אימפקט
+הצפת תובנות תקועות → תוכנית פעולה מיידית.
+סוג
+תובנות
+
+פנימה · שאל · רשום · פנימה
+05 — BUSINESS SCAN
+פרק 06 / X
+
+אקטיבי · עיבוד בתנועה
+3 פנימה · 6 החוצה
+מדיטציית הליכה.
+הליכה בקצב נוח, בלי טלפון ובלי אוזניות. נשימה בקצב של 3 פנימה ו־6 החוצה. נותנים למחשבות להופיע ולחלוף מעצמן. התנועה היא הכלי.
+טכניקה
+הליכה מודעת · ללא הסחות
+אימפקט
+שחרור חמצן למוח. עיבוד רעיונות תקועים בזמן תנועה.
+סוג
+אקטיבי
+
+צעד · צעד · נשימה · צעד
+06 — WALKING
+פרק 07 / X
+
+תובנות · פוקוס ובהירות
+דקות בודדות
+״טרטקה.״
+בוהים בנקודה אחת על הקיר בגובה העיניים — ללא מצמוץ. עד שהעיניים דומעות מעט. עוצמים. מנסים לראות את הנקודה בתוך מרכז המצח. זרם המחשבות נעצר.
+טכניקה
+מבט ממוקד · נקודה אחת · ללא מצמוץ
+אימפקט
+קיבוע פיזי של המבט עוצר את זרם המחשבות.
+סוג
+תובנות
+
+בהה · אל תמצמץ · עצום · ראה
+07 — TRATAKA
+פרק 08 / X
+
+הרפיה · התאוששות עמוקה
+NSDR · 20–30 דק׳
+יוגה נידרה.
+שוכבים על הגב, ללא תנועה. סורקים חלקי גוף ועוקבים אחר הנשימה — נשארים על התפר הדק שבין ערנות לשינה. הגוף ישן. התודעה לא.
+טכניקה
+הרפיה פיזיולוגית מלאה (NSDR)
+אימפקט
+30 דקות ≈ 2–3 שעות שינה עמוקה. מחדש מאגרי דופמין.
+סוג
+הרפיה
+z
+z
+z
+שכב · עקוב · אל תזוז · נשום
+08 — YOGA NIDRA
+פרק 09 / X
+
+תובנות · פרספקטיבה וסדרי עדיפויות
+20 דק׳
+מדיטציית מוות.
+עוצמים עיניים ומדמיינים את עצמנו בעוד עשרות שנים — עשרים דקות לפני רגע הסיום. הגוף זקן, הנשימה איטית. שואלים את ה"אני הזקן": מה הייתי משנה? למה אני חייב לשים לב עכשיו? מה התובנה הכי גדולה שאתה יכול לתת לי?
+טכניקה
+מסע בזמן · שיחה עם ה"אני העתידי"
+אימפקט
+חיתוך רעשי רקע. מזקקת את מה שבאמת חשוב ומייצרת דחיפות לפעול לפי הערכים האמיתיים.
+סוג
+תובנות
+
+דמיין · שאל · הקשב · חזור
+09 — DEATH MEDITATION
+פרק 10 / X
+
+אקטיבי · אנרגיה ופוקוס קצה
+60 שניות · סבבים
+סופר־ נשימת אש.
+סבב של 60 שניות שאיפה־נשיפה אגרסיביות דרך האף (~2 לשנייה). עוצרים את הנשימה לזמן ארוך ככל שניתן וצוללים פנימה אל ה"באז". כשחייבים — חוזרים מיד לסבב הבא.
+טכניקה
+היפר־ונטילציה מבוקרת · עצירות ארוכות בסבבים
+אימפקט
+"סטירה" למערכת העצבים. פוקוס חד כתער וחיוניות קיצונית.
+סוג
+אקטיבי
+
+60 שניות · עצירה · 60 שניות · עצירה
+10 — SUPER FIRE BREATH
+
+טיימר
+10:00
+
+
+10:00
+5
+10
+15
+20
+25
+30
+התחל
+אפס
